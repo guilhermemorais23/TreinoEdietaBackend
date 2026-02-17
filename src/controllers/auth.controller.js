@@ -6,8 +6,9 @@ exports.register = async (req, res) => {
   const { name, email, password } = req.body;
 
   // Verifica no banco se o email existe
-  db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
-    if (user) return res.status(400).json({ error: "Email já existe" });
+db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
+  if (err) return res.status(500).json(err);
+  if (user) return res.status(400).json({ error: "Email já existe" });
 
     const hash = await bcrypt.hash(password, 10);
 

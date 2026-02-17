@@ -4,11 +4,13 @@ const initDb = () => {
   console.log("🛠️  Iniciando criação de tabelas...");
 
   // Criar Tabela de Usuários
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE,
-    password TEXT
-  )`);
+ db.run(`CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  email TEXT UNIQUE,
+  password TEXT
+)`);
+
 
   // Criar Tabela de Refeições
   db.run(`CREATE TABLE IF NOT EXISTS meals (
