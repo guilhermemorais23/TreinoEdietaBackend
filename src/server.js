@@ -12,7 +12,10 @@ const workoutRoutes = require("./routes/workout.routes");
 const app = express();
 
 // Configurações iniciais
-app.use(cors());
+app.use(cors({
+  origin: "https://treino-edieta.vercel.app", // Sua URL que aparece no erro 
+  credentials: true
+}));
 app.use(express.json());
 
 // Inicializar Banco de Dados
