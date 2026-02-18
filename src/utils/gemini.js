@@ -67,9 +67,12 @@ async function generateHealthPlan(userData) {
   }
 }
 
-// 3. Função para gerar a FICHA DE TREINO (ATUALIZADA)
+// 3. Função para gerar a FICHA DE TREINO (COM VOLUME DE EXERCÍCIOS)
 async function generateWorkoutAI(profile) {
   try {
+    // Adicionamos 'activity_level' ou 'exercise_count' se vier do seu banco
+    const activity = profile.activity_level || "moderado"; 
+
     const chatResponse = await client.chat.complete({
       model: "mistral-large-latest",
       messages: [
@@ -77,6 +80,7 @@ async function generateWorkoutAI(profile) {
           role: "user",
           content: `Aja como um personal trainer brasileiro de elite. 
             Gere um treino para um aluno com objetivo: ${profile.goal}, peso: ${profile.weight}kg e altura: ${profile.height}cm.
+            Considere que o aluno tem um volume de treino: ${activity}.
 
             REGRAS OBRIGATÓRIAS:
             1. IDIOMA: Português do Brasil.
@@ -93,7 +97,6 @@ async function generateWorkoutAI(profile) {
     });
 
     let workoutText = chatResponse.choices[0].message.content;
-    // Limpeza de segurança e conversão para objeto
     const cleanData = JSON.parse(workoutText.replace(/```json/g, "").replace(/```/g, "").trim());
     return cleanData;
 
